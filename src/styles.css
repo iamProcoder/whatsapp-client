@@ -1,1 +1,39 @@
-/* You can add global styles to this file, and also import other style files */
+body{
+  font-family: Segoe UI,Helvetica Neue,Helvetica,Lucida Grande,Arial,Ubuntu,Cantarell,Fira Sans,sans-serif;
+  color: #4a4a4a;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern";
+  -webkit-font-feature-settings: "kern";
+  -moz-font-feature-settings: "kern";
+  -moz-font-feature-settings: "kern=1";
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: #dddbd1 !important;
+  overflow-y: hidden;
+}
+ol, ul {
+  list-style: none;
+}
+.header {
+  align-items: center;
+  display: flex;
+  flex: none;
+  justify-content: flex-start;
+  min-height: 200px;
+  width: 100%;
+  background-color: #00bfa5;
+}
+.bshadow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(5px 5px 5px #222222);
+  opacity: .5;
+  z-index: 9999;
+  position: absolute;
+  margin: 10px;
+  width: 200px;
+  height: 200px;
+}

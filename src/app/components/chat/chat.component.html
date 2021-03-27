@@ -1,0 +1,85 @@
+
+<div class="col-md-12 chat-body">
+    <div class="col-md-3 chat-border-left">
+        <div class="chat-header">
+        </div>
+        <div class="chat-contactList-search">
+            <input name="contactSearch" id="contactSearch" type="text" [(ngModel)]="searchText" class="form-control chat-search-input" placeholder="Ara veya yeni sohbet başlat">
+        </div>
+        <div class="chat-contactList">
+            <div class="contact-item" *ngFor="let item of contactList | filter:searchText" (click)="chatContact(item.number, item.name)">
+                <div class="item-name">{{item.name ? item.name : item.number}}</div>
+                <div class="item-number">{{item.number}}</div>
+                <div class="item-sep"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 chat-bg">
+        <div class="chat-preview" *ngIf="!isContactListClick">
+            <img src="../../../assets/img/intro-connection-light.jpg" class="chat-ready" alt="conntect to WhatsApp">
+            <div class="chat-description-wrapper">
+              <h1>Telefonunuzu bağlı tutun</h1>
+              <span class="chat-description">
+                WhatsApp mesajları senkronize etmek için telefonunuza bağlanır. Veri kullanımını azaltmak için
+                telefonunuzla Wi-Fi'ya bağlanın.
+              </span>
+            </div>
+        </div>
+        <div *ngIf="isContactListClick">
+            <div class="chat-message-header">
+              <img src="{{contactPhoto}}" alt="Contact Photo" class="img-circle chat-contact-image" width="35" height="35" *ngIf="contactPhoto">
+              <img src="../../../assets/img/default-profile-photo.jpg" alt="Contact Photo" class="img-circle chat-contact-image" width="35" height="35" *ngIf="contactPhoto==''">
+               <strong class="mr-2">{{contactNameToMessage}}</strong> {{contactNumberToMessage}}
+            </div>
+            <div class="scrollLoading">
+              <div class="spinner-border text-success" role="status" *ngIf="scrollTopLoading">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div> 
+            <div #scrollMe class="chat-message-content" [scrollTop]="scrollMe.scrollHeight" (scroll)="scrollToTop($event)">
+                <div *ngFor="let message of messageList">
+                  <div class="col-md-12 chat-message-content-fromMe-wrapper">
+                    <div class="chat-message-content-fromMe" *ngIf="message.fromMe">
+                      {{message.body}}
+                      <div class="whenWrapper"><div class="when"><span class="spanWhen" dir="auto">{{message.timestamp}}</span></div></div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 chat-message-content-to-wrapper">
+                    <div class="chat-message-content-to" *ngIf="!message.fromMe">
+                      <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="messageToCheck" (click)="checkToMessage($event)">
+                        <label class="form-check-label" for="messageToCheck">
+                          <span id="messageBody" name="messageBody" *ngIf="!message.hasMedia">{{message.body}}</span>
+                          <span id="messageBody" name="messageBody" *ngIf="message.hasMedia">
+                            <img src="data:image/png;base64,{{message.mediaKey}}"  alt="Alınan Foto" class="img-circle" width="250" height="250">
+                          </span>
+                          <div class="whenWrapper">
+                            <div class="when"><span class="spanWhen" dir="auto">{{message.timestamp}}</span></div>
+                          </div>
+                        </label>
+                      </div>                      
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="chat-message-footer">
+                <div></div>
+                <div class="chat-message-send-input">
+                    <input name="sendMessage" id="sendMessage" type="text" class="form-control chat-message-send-input" placeholder="Bir mesaj yazın" (keydown)="keyDownSendMessage($event)">
+                </div>
+                <div class="chat-message-send-button">
+                    <button type="submit" class="chat-send-button" (click)="sendMessage()">
+                        <span data-testid="send" data-icon="send" class=""><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z"></path></svg></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+      <textarea name="applicationText" id="applicationText" type="text" class="form-control chat-message-send-input" rows="10" cols="75"></textarea>
+      <br>
+      <div class="form-group" style="margin-left: 20px;">
+        <input type="file" class="form-control-file" id="fileUpload" name="fileUpload">
+      </div>
+    </div>
+</div>
